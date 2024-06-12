@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stake Level Calculator</title>
+    <link rel="stylesheet" href="style.css">
+<body>
+    <div class="container">
+        <h1>Bet Amount Calculator</h1>
+        <label for="betAmount">Enter Bet amount:</label>
+        <input type="number" id="betAmount" step="0.01" required>
+        
+        <label for="increasePercent">Enter Increase Percent:</label>
+        <input type="number" id="increasePercent" step="0.01" required>
+        
+        <label for="level">Enter Level:</label>
+        <input type="number" id="level" step="1" required>
+        
+        <button onclick="calculate()">Calculate</button>
+        
+        <div class="results" id="results"></div>
+    </div>
+
+    <script>
+        function calculate() {
+            let betAmount = parseFloat(document.getElementById('betAmount').value);
+            let increasePercent = parseFloat(document.getElementById('increasePercent').value);
+            let level = parseInt(document.getElementById('level').value);
+
+            let totalSum = 0;
+            let currentBet = betAmount;
+            let resultsDiv = document.getElementById('results');
+
+            resultsDiv.innerHTML = '';
+
+            for (let i = 0; i < level; i++) {
+                totalSum += currentBet;
+                let resultLevel = document.createElement('div');
+                resultLevel.classList.add('result-level');
+                resultLevel.textContent = `Level ${i}: ${currentBet.toFixed(2)}`;
+                resultsDiv.appendChild(resultLevel);
+                currentBet += (currentBet * increasePercent / 100);
+            }
+
+            let totalSumDiv = document.createElement('div');
+            totalSumDiv.classList.add('result-level');
+            totalSumDiv.textContent = `The Total Sum is: ${totalSum.toFixed(2)}`;
+            resultsDiv.appendChild(totalSumDiv);
+        }
+    </script>
+</body>
+</html>
